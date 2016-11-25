@@ -1,4 +1,4 @@
-use types::number::balanced::{Int, Undefined, Zero, Plus, Minus};
+use types::number::balanced::{Int, Zero, Plus, Minus};
 
 #[cfg(features = "specialization")]
 use types::number::balanced::Error;
