@@ -1,0 +1,12 @@
+[package]
+name = "type-level-logic"
+version = "0.1.0"
+authors = ["Sean Leffler <sean@errno.com>"]
+
+[dependencies]
+type-operators = "0.1.3"
+
+[features]
+default = []
+specialization = ["type-operators/specialization"]
+nightly = ["specialization"]
