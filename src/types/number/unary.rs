@@ -4,8 +4,7 @@ use std::default::Default;
 type_operators! {
     [A, B, C, D, E]
 
-    #[derive(Default)]
-    concrete Nat: Default => usize {
+    concrete Nat: Default => usize where #[derive(Default)] {
         Z => 0,
         S(N: Nat) => 1 + N,
         Undefined => panic!("Error: This type-level Nat value is undefined, and cannot be reified!"),

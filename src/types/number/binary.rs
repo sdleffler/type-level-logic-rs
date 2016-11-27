@@ -4,8 +4,7 @@ use std::default::Default;
 type_operators! {
     [A, B, C, D, E]
 
-    #[derive(Default)]
-    concrete Nat: Default => usize {
+    concrete Nat: Default => usize where #[derive(Default)] {
         P => 0,
         O(N: Nat) => 2 * N,
         I(N: Nat) => 1 + 2 * N,
