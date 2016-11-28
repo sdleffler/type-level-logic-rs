@@ -1,9 +1,10 @@
-//! (Unbalanced) type-level ternary operations, with "strongly" enforced validity. In this module
+//! (Unbalanced) type-level ternary operations, with "weakly" enforced validity. In this module
 //! documentation, unsigned ternary numbers will be referred to as `Nat`s (because they're a
 //! representation of the natural numbers), "natural numbers" (see preceding), or "unsigned
 //! numbers".
 
-use types::number::ternary::{NatPair, Nat2, Nat2P1, Nat2P2, Nat, Undefined, Term, Zero, One, Two};
+use types::number::ternary::{NatPair, Nat2, Nat2P1, Nat2P2, Nat, Undefined, Term, Zero, One, Two,
+                             Error};
 
 type_operators! {
     [A, B, C, D, E, F, G, H]
@@ -17,6 +18,7 @@ type_operators! {
             [(Zero X)] => (One X)
             [(One X)] => (Two X)
             [(Two X)] => (Zero (# X))
+            {X} => Error
         }
     }
 
@@ -29,6 +31,7 @@ type_operators! {
             [(Zero X)] => (Two (# X))
             [(One X)] => (@NatTriple X)
             [(Two X)] => (One X)
+            {X} => Error
         }
     }
 
@@ -41,6 +44,7 @@ type_operators! {
             [(Zero X)] => (One (@NatPred X))
             [(One X)] => (Two (@NatPred X))
             [(Two X)] => (@NatTriple X)
+            {X} => Error
         }
     }
 
@@ -56,6 +60,7 @@ type_operators! {
             [(Zero N)] => (Zero (Zero N))
             [(One N)] => (Zero (One N))
             [(Two N)] => (Zero (Two N))
+            {N} => Error
         }
     }
 
@@ -67,11 +72,12 @@ type_operators! {
         [Term] => Term
         [(Zero Term)] => Term
         forall (N: Nat) {
-            [(Zero (Zero N))] => (Zero (# (Zero N)))
+            [(Zero (Zero N))] => (Zero (% (Zero N)))
             [(Zero (One N))] => (Zero (One (# N)))
             [(Zero (Two N))] => (Zero (Two (# N)))
             [(One N)] => (One N)
             [(Two N)] => (Two N)
+            {N} => Error
         }
     }
 
@@ -105,6 +111,7 @@ type_operators! {
             [(Two X), (Zero Y)] => (Two (# X Y))
             [(Two X), (One Y)] => (Zero (@NatSucc (# X Y)))
             [(Two X), (Two Y)] => (One (@NatSucc (# X Y)))
+            {X, Y} => Error
         }
     }
 
@@ -116,6 +123,7 @@ type_operators! {
             [(Zero X)] => (One (Zero X))
             [(One X)] => (One (One X))
             [(Two X)] => (One (Two X))
+            {X} => Error
         }
     }
 
@@ -127,6 +135,7 @@ type_operators! {
             [(Zero X)] => (Two (Zero X))
             [(One X)] => (Two (One X))
             [(Two X)] => (Two (Two X))
+            {X} => Error
         }
     }
 
@@ -162,6 +171,7 @@ type_operators! {
             [(Two X), (Zero Y)] => (@NatTriplePlusTwo (# X Y))
             [(Two X), (One Y)] => (@NatTriplePlusOne (# X Y))
             [(Two X), (Two Y)] => (@NatTriple (# X Y))
+            {X, Y} => Error
         }
     }
 
@@ -195,6 +205,7 @@ type_operators! {
             [(Two X), (Zero Y)] => (@NatAdd (# (One X) (Zero Y)) (Zero Y))
             [(Two X), (One Y)] => (@NatAdd (# (One X) (One Y)) (One Y))
             [(Two X), (Two Y)] => (@NatAdd (# (One X) (Two Y)) (Two Y))
+            {X, Y} => Error
         }
     }
 
@@ -223,6 +234,7 @@ type_operators! {
             [(Two X), (Zero Y), L, E, G] => (# X Y L G G)
             [(Two X), (One Y), L, E, G] => (# X Y L G G)
             [(Two X), (Two Y), L, E, G] => (# X Y L E G)
+            {X, Y, L, E, G} => Error
         }
     }
 
@@ -257,6 +269,7 @@ type_operators! {
             [(Zero M), N] => (# M (Zero N))
             [(One M), N] => (# M (One N))
             [(Two M), N] => (# M (Two N))
+            {M, N} => Error
         }
     }
 
@@ -282,6 +295,7 @@ type_operators! {
             [(Two N), (Zero D)] => (@Nat2P2 (@NatDivInternal (@NatRev (Two N)) (Zero D) (Nat2 Term Term)))
             [(Two N), (One D)] => (@Nat2P2 (@NatDivInternal (@NatRev (Two N)) (One D) (Nat2 Term Term)))
             [(Two N), (Two D)] => (@Nat2P2 (@NatDivInternal (@NatRev (Two N)) (Two D) (Nat2 Term Term)))
+            {N, D} => Error
         }
     }
 
@@ -307,6 +321,7 @@ type_operators! {
             [(Two N), (Zero D)] => (@Nat2P1 (@NatDivInternal (@NatRev (Two N)) (Zero D) (Nat2 Term Term)))
             [(Two N), (One D)] => (@Nat2P1 (@NatDivInternal (@NatRev (Two N)) (One D) (Nat2 Term Term)))
             [(Two N), (Two D)] => (@Nat2P1 (@NatDivInternal (@NatRev (Two N)) (Two D) (Nat2 Term Term)))
+            {N, D} => Error
         }
     }
 

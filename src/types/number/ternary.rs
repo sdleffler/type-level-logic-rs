@@ -7,9 +7,9 @@ type_operators! {
         One(X: Nat = Term) => 3 * X + 1,
         Two(X: Nat = Term) => 3 * X + 2,
         Undefined => panic!("Error: This type-level Nat value is undefined, and cannot be reified!"),
-        #[cfg(features = "specialization")]
+        #[cfg(feature = "specialization")]
         Error => panic!("Error: An unexpected, non-Nat type has been introduced into type-level arithmetic!"),
-        #[cfg(features = "specialization")]
+        #[cfg(feature = "specialization")]
         DEFAULT => panic!("Error: This is not a Nat!"),
     }
 

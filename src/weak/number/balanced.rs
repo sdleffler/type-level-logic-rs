@@ -1,5 +1,5 @@
 use types::number::balanced::{IntPair, Int2, Int2P1, Int2P2, Int, Undefined, Term, Zero, Plus,
-                              Minus};
+                              Minus, Error};
 
 type_operators! {
     [A, B, C, D, E, F, G, H]
@@ -12,6 +12,7 @@ type_operators! {
             [(Zero N)] => (Plus N)
             [(Plus N)] => (Minus (# N))
             [(Minus N)] => (@Unique (Zero N))
+            {N} => Error
         }
     }
 
@@ -23,6 +24,7 @@ type_operators! {
             [(Zero N)] => (Minus N)
             [(Plus N)] => (@Unique (Zero N))
             [(Minus N)] => (Plus (# N))
+            {N} => Error
         }
     }
 
@@ -37,6 +39,7 @@ type_operators! {
             [(Zero N)] => (Zero (Zero N))
             [(Plus N)] => (Zero (Plus N))
             [(Minus N)] => (Zero (Minus N))
+            {N} => Error
         }
     }
 
@@ -48,11 +51,12 @@ type_operators! {
         [Term] => Term
         [(Zero Term)] => Term
         forall (N: Int) {
-            [(Zero (Zero N))] => (Zero (# (Zero N)))
+            [(Zero (Zero N))] => (Zero (% (Zero N)))
             [(Zero (Plus N))] => (Zero (Plus (# N)))
             [(Zero (Minus N))] => (Zero (Minus (# N)))
             [(Plus N)] => (Plus N)
             [(Minus N)] => (Minus N)
+            {N} => Error
         }
     }
 
@@ -66,11 +70,12 @@ type_operators! {
         [Term] => Term
         [(Zero Term)] => Term
         forall (N: Int) {
-            [(Zero (Zero N))] => (Zero (# (Zero N)))
+            [(Zero (Zero N))] => (Zero (% (Zero N)))
             [(Zero (Plus N))] => (Zero (Minus (# N)))
             [(Zero (Minus N))] => (Zero (Plus (# N)))
             [(Plus N)] => (Minus (# N))
             [(Minus N)] => (Plus (# N))
+            {N} => Error
         }
     }
 
@@ -104,6 +109,7 @@ type_operators! {
             [(Minus M), (Zero N)] => (Minus (# M N))
             [(Minus M), (Plus N)] => (@Unique (Zero (# M N)))
             [(Minus M), (Minus N)] => (Plus (# (# M N) Minus))
+            {M, N} => Error
         }
     }
 
@@ -137,6 +143,7 @@ type_operators! {
             [(Minus M), (Zero N)] => (Minus (# M N))
             [(Minus M), (Plus N)] => (Plus (# (# M N) Plus))
             [(Minus M), (Minus N)] => (@Unique (Zero (# M N)))
+            {M, N} => Error
         }
     }
 
@@ -170,6 +177,7 @@ type_operators! {
             [(Minus M), (Zero N)] => (@IntSub (# M (Zero (Zero N))) (Zero N)) // mT * n0 => 3 * (m * n0) + 0
             [(Minus M), (Plus N)] => (@IntSub (# M (Zero (Plus N))) (Plus N)) // mT * n1 => 3 * (m * n1) - n1
             [(Minus M), (Minus N)] => (@IntSub (# M (Zero (Minus N))) (Minus N)) // mT * nT => 3 * (m * nT) - nT
+            {M, N} => Error
         }
     }
 
@@ -199,6 +207,7 @@ type_operators! {
             [(Minus M), (Zero N), L, E, G] => (# M N L L G)
             [(Minus M), (Plus N), L, E, G] => (# M N L L G)
             [(Minus M), (Minus N), L, E, G] => (# M N L E G)
+            {M, N, L, E, G} => Error
         }
     }
 
@@ -226,6 +235,7 @@ type_operators! {
             [(Minus M), (Zero N), L, E, G] => (# M N L L G)
             [(Minus M), (Plus N), L, E, G] => (# M N L L G)
             [(Minus M), (Minus N), L, E, G] => (# M N L E G)
+            {M, N, L, E, G} => Error
         }
     }
 
@@ -249,6 +259,7 @@ type_operators! {
             [(Zero X)] => (@IntLteCmp Term (Zero X) (Zero X) (@IntNeg (Zero X)))
             [(Plus X)] => (@IntLteCmp Term (Plus X) (Plus X) (@IntNeg (Plus X)))
             [(Minus X)] => (@IntLteCmp Term (Minus X) (Minus X) (@IntNeg (Minus X)))
+            {X} => Error
         }
     }
 
@@ -279,6 +290,7 @@ type_operators! {
             [(Zero M), N] => (# M (Zero N))
             [(Plus M), N] => (# M (Plus N))
             [(Minus M), N] => (# M (Minus N))
+            {M, N} => Error
         }
     }
 
@@ -303,6 +315,7 @@ type_operators! {
             [(Minus N), (Zero D)] => (@Int2P2 (@IntDivInternal (@IntRev (Minus N)) (Zero D) (Int2 Term Term)))
             [(Minus N), (Plus D)] => (@Int2P2 (@IntDivInternal (@IntRev (Minus N)) (Plus D) (Int2 Term Term)))
             [(Minus N), (Minus D)] => (@Int2P2 (@IntDivInternal (@IntRev (Minus N)) (Minus D) (Int2 Term Term)))
+            {N, D} => Error
         }
     }
 
@@ -327,6 +340,7 @@ type_operators! {
             [(Minus N), (Zero D)] => (@Int2P1 (@IntDivInternal (@IntRev (Minus N)) (Zero D) (Int2 Term Term)))
             [(Minus N), (Plus D)] => (@Int2P1 (@IntDivInternal (@IntRev (Minus N)) (Plus D) (Int2 Term Term)))
             [(Minus N), (Minus D)] => (@Int2P1 (@IntDivInternal (@IntRev (Minus N)) (Minus D) (Int2 Term Term)))
+            {N, D} => Error
         }
     }
 

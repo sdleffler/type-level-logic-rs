@@ -7,9 +7,9 @@ type_operators! {
         Plus(X: Int = Term) => 3 * X + 1,
         Minus(X: Int = Term) => 3 * X - 1,
         Undefined => panic!("Error: This type-level Int value is undefined, and cannot be reified!"),
-        #[cfg(features = "specialization")]
+        #[cfg(feature = "specialization")]
         Error => panic!("Error: An unexpected, non-Int type has been introduced into type-level arithmetic!"),
-        #[cfg(features = "specialization")]
+        #[cfg(feature = "specialization")]
         DEFAULT => panic!("Error: This is not an Int!"),
     }
 

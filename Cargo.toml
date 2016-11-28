@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Sean Leffler <sean@errno.com>"]
 
 [dependencies]
-type-operators = { git = "https://github.com/sdleffler/type-operators-rs.git" }
+type-operators = "0.2.1"
 
 [features]
 default = []
