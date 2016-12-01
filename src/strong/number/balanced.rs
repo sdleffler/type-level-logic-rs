@@ -1,5 +1,4 @@
-use types::number::balanced::{IntPair, Int2, Int2P1, Int2P2, Int, Undefined, Term, Zero, Plus,
-                              Minus};
+use types::number::balanced::{IntPair, Int2, Int, Undefined, Term, Zero, Plus, Minus};
 
 type_operators! {
     [A, B, C, D, E, F, G, H]

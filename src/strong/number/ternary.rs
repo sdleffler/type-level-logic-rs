@@ -3,7 +3,7 @@
 //! representation of the natural numbers), "natural numbers" (see preceding), or "unsigned
 //! numbers".
 
-use types::number::ternary::{NatPair, Nat2, Nat2P1, Nat2P2, Nat, Undefined, Term, Zero, One, Two};
+use types::number::ternary::{NatPair, Nat2, Nat, Undefined, Term, Zero, One, Two};
 
 type_operators! {
     [A, B, C, D, E, F, G, H]
