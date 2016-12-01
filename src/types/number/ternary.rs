@@ -16,18 +16,6 @@ type_operators! {
     concrete NatPair: Default => (usize, usize) where #[derive(Default)] {
         Nat2(X: Nat, Y: Nat) => (X, Y),
     }
-
-    (Nat2First) Nat2P1(NatPair): Nat {
-        forall (A: Nat, B: Nat) {
-            [(Nat2 A B)] => A
-        }
-    }
-
-    (Nat2Second) Nat2P2(NatPair): Nat {
-        forall (A: Nat, B: Nat) {
-            [(Nat2 A B)] => B
-        }
-    }
 }
 
 

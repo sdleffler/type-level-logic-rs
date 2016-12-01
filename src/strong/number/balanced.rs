@@ -4,6 +4,20 @@ use types::number::balanced::{IntPair, Int2, Int2P1, Int2P2, Int, Undefined, Ter
 type_operators! {
     [A, B, C, D, E, F, G, H]
 
+    /// Project the first value in an `IntPair`.
+    (Int2First) Int2P1(IntPair): Int {
+        forall (A: Int, B: Int) {
+            [(Int2 A B)] => A
+        }
+    }
+
+    /// Project the second value in an `IntPair`.
+    (Int2Second) Int2P2(IntPair): Int {
+        forall (A: Int, B: Int) {
+            [(Int2 A B)] => B
+        }
+    }
+
     /// The `Succ` operator adds one to an integer.
     (Succ) IntSucc(Int): Int {
         [Undefined] => Undefined

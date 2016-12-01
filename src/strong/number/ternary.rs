@@ -8,6 +8,20 @@ use types::number::ternary::{NatPair, Nat2, Nat2P1, Nat2P2, Nat, Undefined, Term
 type_operators! {
     [A, B, C, D, E, F, G, H]
 
+    /// Project the first value in a `NatPair`.
+    (Nat2First) Nat2P1(NatPair): Nat {
+        forall (A: Nat, B: Nat) {
+            [(Nat2 A B)] => A
+        }
+    }
+
+    /// Project the second value in a `NatPair`.
+    (Nat2Second) Nat2P2(NatPair): Nat {
+        forall (A: Nat, B: Nat) {
+            [(Nat2 A B)] => B
+        }
+    }
+
     /// The `Succ` operator adds one to a `Nat`. It is always defined. It can be used as `Succ<X>`
     /// or `<X as NatSucc>::Output`.
     (Succ) NatSucc(Nat): Nat {

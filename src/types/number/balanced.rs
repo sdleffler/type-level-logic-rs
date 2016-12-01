@@ -16,18 +16,6 @@ type_operators! {
     concrete IntPair => (isize, isize) {
         Int2(X: Int, Y: Int) => (X, Y),
     }
-
-    (Int2First) Int2P1(IntPair): Int {
-        forall (A: Int, B: Int) {
-            [(Int2 A B)] => A
-        }
-    }
-
-    (Int2Second) Int2P2(IntPair): Int {
-        forall (A: Int, B: Int) {
-            [(Int2 A B)] => B
-        }
-    }
 }
 
 
