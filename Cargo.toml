@@ -11,7 +11,7 @@ repository = "https://github.com/sdleffler/type-level-logic-rs"
 
 readme = "README.md"
 
-keywords = ["type", "type-level", "logic", "nat", "int", "natural", "integer", "ternary"]
+keywords = ["type", "type-level", "logic", "nat", "int"]
 
 license = "MIT/Apache-2.0"
 
