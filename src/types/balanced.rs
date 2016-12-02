@@ -1,7 +1,58 @@
+//! Signed, unbounded type-level integers represented in balanced ternary form. `Int` constants
+//! are provided, from `SN81` (signed, negative 81) to `S0` (signed zero) to `SP81` (signed,
+//! positive 81). `SN243` and `SP243` are also provided.
+
 type_operators! {
     [A, B, C, D, E]
 
-    concrete Int => isize {
+    /// The `Int` kind is for signed, type-level integers. They are represented through balanced
+    /// ternary in order to avoid a potentially non-unique representation of zero. [Balanced
+    /// ternary](https://en.wikipedia.org/wiki/Balanced_ternary) is a *signed digit
+    /// representation*. A signed digit representation is two things:
+    ///
+    /// 1. *Really cool.*
+    /// 2. A number system in which digits can be multiples of negative one. If you want to go even
+    ///    further down the Cool Spectrum, Donald Knuth suggested a *complex-base* number system
+    ///    which has digits that are multiples of powers of `i`. I'm honestly not sure how useful
+    ///    that is but *it sure is really cool!*
+    ///
+    /// In balanced ternary, we have three digits: zero, plus, and minus. So, here are the integers
+    /// from negative five to positive five, in balanced ternary:
+    ///
+    /// Decimal | Balanced ternary (0+-) | Balanced ternary (01T) | Expression
+    /// --------|------------------------|------------------------|-----------
+    /// -5      | `-++`                  | `T11`                  | `3 * (3 * (3 * 0 - 1) + 1) + 1`
+    /// -4      | `--`                   | `TT`                   | `3 * (3 * 0 - 1) - 1`
+    /// -3      | `-0`                   | `T0`                   | `3 * (3 * 0 - 1)`
+    /// -2      | `-+`                   | `T1`                   | `3 * (3 * 0 - 1) + 1`
+    /// -1      | `-`                    | `T`                    | `3 * 0 - 1`
+    /// 0       | `0`                    | `0`                    | `0`
+    /// 1       | `+`                    | `1`                    | `3 * 0 + 1`
+    /// 2       | `+-`                   | `1T`                   | `3 * (3 * 0 + 1) - 1`
+    /// 3       | `+0`                   | `10`                   | `3 * (3 * 0 + 1)`
+    /// 4       | `++`                   | `11`                   | `3 * (3 * 0 + 1) + 1`
+    /// 5       | `+--`                  | `1TT`                  | `3 * (3 * (3 * 0 + 1) - 1) - 1`
+    ///
+    /// Like the ternary representation in this library, we use a type-level linked list to
+    /// represent our balanced ternary numbers. Our digits are:
+    ///
+    /// - `Term` represents the end of our linked list - our "nil" - and also "zero".
+    /// - `Zero<X>`, `Plus<X>`, and `Minus<X>` represent `3 * X`, `3 * X + 1`, and `3 * X - 1`,
+    ///   respectively.
+    ///
+    /// Like the ternary representation, this linked list is stored with the least-significant
+    /// digit at the head of the list. Precautions are taken to avoid issues with non-unique
+    /// representations with redundant zeroes such as `Zero<Zero<Term>>` and if one *ever crops up
+    /// in your code*, please lodge an issue! It is definitely caused by either a user error or a
+    /// bug.
+    ///
+    /// `Int` can be reified to `isize`. Like `Nat`s, `Int`s cannot be reified to a constant
+    /// expression due to limitations with Rust's associated const fns and constants. If and when
+    /// these features are added to Rust in the future they will be added here too.
+    ///
+    /// `Int`s are always zero-sized, so you can store them directly in your `struct`s instead of
+    /// using `PhantomData`. They implement `Default`.
+    concrete Int: Default => isize where #[derive(Default)] {
         Term => 0,
         Zero(X: Int = Term) => 3 * X,
         Plus(X: Int = Term) => 3 * X + 1,
@@ -13,7 +64,9 @@ type_operators! {
         DEFAULT => panic!("Error: This is not an Int!"),
     }
 
-    concrete IntPair => (isize, isize) {
+    /// The `IntPair` trait and `Int2` struct represent 2-tuples of `Int`s. They are used
+    /// internally for defining type-level logic.
+    concrete IntPair: Default => (isize, isize) where #[derive(Default)] {
         Int2(X: Int, Y: Int) => (X, Y),
     }
 }

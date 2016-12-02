@@ -1,9 +1,11 @@
-//! (Unbalanced) type-level ternary operations, with "strongly" enforced validity. In this module
+//! Type-level ternary operations, with "strongly" enforced validity. In this module
 //! documentation, unsigned ternary numbers will be referred to as `Nat`s (because they're a
 //! representation of the natural numbers), "natural numbers" (see preceding), or "unsigned
 //! numbers".
+//!
+//! For more information, see the documentation for the `Nat` trait.
 
-pub use types::number::ternary::*;
+pub use types::ternary::*;
 
 type_operators! {
     [A, B, C, D, E, F, G, H]
@@ -355,7 +357,6 @@ type_operators! {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use types::number::ternary::*;
 
     #[test]
     fn ternary_succ() {

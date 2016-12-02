@@ -1,6 +1,39 @@
+//! Unsigned, unbounded type-level integers through a ternary representation. `Nat` constants
+//! are provided, from `U0` (unsigned zero) to `U81` (unsigned 81) as well as `3^5` (`U243`.)
+
 type_operators! {
     [A, B, C, D, E]
 
+    /// The `Nat` kind is for unsigned type-level integers, including zero (hence `Nat`, for
+    /// "natural number"). We use a ternary representation here, for symmetry with our signed
+    /// number representation - a binary representation may eventually be included because of its
+    /// ease of division and multiplication by two. Our ternary representation is essentially a
+    /// compile-time linked list of types, where the least-significant digit is at the head of the
+    /// list:
+    ///
+    /// - `Term` is the "nil" of our linked list, and represents "zero".
+    /// - `Zero`, `One`, and `Two` are the three "cons" types. Semantically, `Zero<X>` means
+    ///   "three times `X` plus zero", `One<X>` means "three times `X` plus one", and `Two<X>`
+    ///   means "three times `X` plus two". Intuitively, they are the "digits" of our ternary
+    ///   representation, although if you intend to read a number with them, you will have to do
+    ///   so *backwards* because the least-significant will be on the left.
+    ///
+    /// Precautions are taken in arithmetic logic to prevent types with redundant zeroes from
+    /// appearing (like `Zero<Zero<Term>>`) which could otherwise cause non-unique representations.
+    /// This would be horrible because then, types with equal values (but not equal
+    /// representations!) would be considered inequal by the Rust type-checker. If a type with
+    /// redundant zeroes surfaces, it is definitely caused by user error or a bug; please lodge an
+    /// issue.
+    ///
+    /// `Nat`s can be reified to `usize`. Unfortunately, due to the state of associated constants
+    /// and const functions in Rust, `Nat`s cannot be reified to a constant expression. As a
+    /// result, it is not possible to size a Rust array by the value of a `Nat` type. If you want
+    /// a sized array paramterized by a `Nat`, the `tll-array` crate is being developed for that
+    /// purpose.
+    ///
+    /// `Nat`s are always zero-sized. You can use `PhantomData` to store them in your struct (in
+    /// order to avoid Rust's "unused type parameter" error) or you can store them directly - all
+    /// `Nat`s implement `Default`.
     concrete Nat: Default => usize where #[derive(Default)] {
         Term => 0,
         Zero(X: Nat = Term) => 3 * X,
@@ -13,6 +46,8 @@ type_operators! {
         DEFAULT => panic!("Error: This is not a Nat!"),
     }
 
+    /// The `NatPair` trait and `Nat2` struct represent 2-tuples of `Nat`s. They are used
+    /// internally for type-level logic.
     concrete NatPair: Default => (usize, usize) where #[derive(Default)] {
         Nat2(X: Nat, Y: Nat) => (X, Y),
     }

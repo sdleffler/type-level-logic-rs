@@ -1,4 +1,7 @@
-pub use types::number::balanced::*;
+//! Type-level balanced ternary operations. For more information, see the documentation for the
+//! `Int` trait.
+
+pub use types::balanced::*;
 
 type_operators! {
     [A, B, C, D, E, F, G, H]
@@ -375,7 +378,6 @@ type_operators! {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use types::number::balanced::*;
 
     #[test]
     fn balanced_ternary_cmp() {
