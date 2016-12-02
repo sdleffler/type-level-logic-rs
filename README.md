@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/sdleffler/type-level-logic-rs.svg?branch=master)](https://travis-ci.org/sdleffler/type-level-logic-rs)
-<!-- [![Docs Status](https://docs.rs/type-operators/badge.svg)](https://docs.rs/type-operators) -->
-<!-- [![On crates.io](https://img.shields.io/crates/v/type-operators.svg)](https://crates.io/crates/type-operators) -->
+<!-- [![Docs Status](https://docs.rs/type-level-logic/badge.svg)](https://docs.rs/type-level-logic) -->
+<!-- [![On crates.io](https://img.shields.io/crates/v/type-level-logic.svg)](https://crates.io/crates/type-level-logic) -->
 
 # Type Level Logic for Rust
 
@@ -9,9 +9,9 @@ This crate provides various primitives for writing type-level code in Rust. It m
 Current features:
 - Unsigned integers (using a ternary representation)
 - Signed integers (using a balanced ternary representation)
+- Boolean logic
 
 Projected features:
-- Boolean logic
 - Type-level lists and sets
 
 # [Documentation](https://sdleffler.github.io/type-level-logic-rs)
