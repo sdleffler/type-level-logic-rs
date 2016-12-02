@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/sdleffler/type-level-logic-rs.svg?branch=master)](https://travis-ci.org/sdleffler/type-level-logic-rs)
-<!-- [![Docs Status](https://docs.rs/type-level-logic/badge.svg)](https://docs.rs/type-level-logic) -->
-<!-- [![On crates.io](https://img.shields.io/crates/v/type-level-logic.svg)](https://crates.io/crates/type-level-logic) -->
+[![Docs Status](https://docs.rs/type-level-logic/badge.svg)](https://docs.rs/type-level-logic)
+[![On crates.io](https://img.shields.io/crates/v/type-level-logic.svg)](https://crates.io/crates/type-level-logic)
 
 # Type Level Logic for Rust
 
